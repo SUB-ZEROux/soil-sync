@@ -351,7 +351,6 @@
       object-fit: cover;
     }
 
-    .info-card body { display: block; }
     .info-card .content {
       padding: 18px;
     }
@@ -591,7 +590,7 @@
     const API_BASE = (() => {
       const local = 'http://localhost:3000';
       const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-      return isLocalhost ? local : 'https://your-soil-sync-api.onrender.com';
+      return isLocalhost ? local : 'https://soil-sync-api.onrender.com';
     })();
 
     const cropGallery = document.getElementById('cropGallery');
