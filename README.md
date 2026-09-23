@@ -1,8 +1,8 @@
 # 🌱 Soil Sync
 
-> **Smart farming. Shared knowledge. Sustainable futures.**
+> Smart farming. Shared knowledge. Sustainable futures.
 
-Soil Sync is a friendly, responsive farmers' community built as a lightweight front-end experience. Farmers can share crop photos, exchange practical advice about crops and soil, explore growing information, and connect with consumers, marketplaces, and government bodies.
+Soil Sync is a responsive farmers' community platform designed to help growers share crop photos, exchange practical advice, and connect with buyers or agricultural support services. The project combines a lightweight front-end experience with a small Node.js API that stores uploaded crop posts, comments, and contact messages.
 
 <div align="center">
 
@@ -12,125 +12,128 @@ Soil Sync is a friendly, responsive farmers' community built as a lightweight fr
 
 </div>
 
-## ✨ Why Soil Sync?
+## ✨ Features
 
-Agricultural knowledge grows when it is shared. Soil Sync brings the most useful parts of a farming community into one simple interface:
+- 📸 Upload crop photos with a description and location
+- 💬 Post and view community comments on crop entries
+- 🌾 Browse crop and soil education cards
+- 🤝 Send buyer or support inquiries through the contact form
+- 📱 Responsive layout for mobile, tablet, and desktop screens
+- ⚙️ Persistent backend storage using SQLite and local image uploads
 
-- 📸 **Share crop photos** with a description and location.
-- 💬 **Learn from the community** through crop-specific comments.
-- 🌾 **Explore crop and soil information** in easy-to-read cards.
-- 🤝 **Reach consumers, marketplaces, and government bodies** through a contact form.
-- 📱 **Use it on any device** with responsive navigation and mobile-friendly layouts.
-- ♿ **Start with accessibility in mind** using labels, landmarks, live regions, alt text, and keyboard-friendly controls.
+## 🧱 Project structure
 
-## 🎨 Design direction
-
-The interface uses a calm, nature-inspired visual system so the content feels welcoming and easy to scan:
-
-| Design choice | Purpose |
-| --- | --- |
-| 🌿 Deep and light greens | Reinforce agriculture, trust, and growth |
-| 💧 Soft blue-green gradient | Create a fresh, open background |
-| 🧊 Glass-style cards | Separate sections without making the page feel heavy |
-| ✨ Gentle motion | Add energy while keeping the experience approachable |
-| 📐 Responsive cards and navigation | Keep the experience useful on phones, tablets, and desktops |
-| 🔤 Poppins + Inter | Combine expressive headings with readable body copy |
+```text
+soil-sync/
+├── index.html          # Front-end experience and client-side behavior
+├── README.md           # Project overview and setup guide
+├── backend/
+│   ├── src/
+│   │   └── server.js   # Express API and SQLite persistence
+│   ├── .env.example    # Sample environment variables
+│   ├── package.json    # Node.js dependencies and scripts
+│   └── README.md      # Backend-specific setup notes
+└── .gitignore
+```
 
 ## 🚀 Quick start
 
-This is a static HTML, CSS, and JavaScript project. No build step or package installation is required.
+### 1) Run the frontend
 
-### Option 1: Open the file directly
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/SUB-ZEROux/soil-sync.git
-   cd soil-sync
-   ```
-
-2. Open `index.html` in a modern browser.
-
-### Option 2: Run a local server (recommended)
-
-A local server gives you a more realistic development environment and avoids browser restrictions that can affect local files.
+This project works as a static HTML page, so you can open `index.html` directly in a browser or serve the root with a local web server.
 
 ```bash
-# Python 3
+git clone https://github.com/SUB-ZEROux/soil-sync.git
+cd soil-sync
 python3 -m http.server 8000
 ```
 
 Then open <http://localhost:8000>.
 
-If you use VS Code, the **Live Server** extension is another convenient option: right-click `index.html` and choose **Open with Live Server**.
+### 2) Run the API
 
-## 🧭 How to use the demo
+The backend requires Node.js 20+.
 
-1. **Upload a crop photo** — select an image, enter a description, add a location, and submit the form.
-2. **Browse the gallery** — review the sample crop posts from Indian farming regions.
-3. **Join the conversation** — add your name and a comment to any crop card.
-4. **Learn** — read the wheat growth, soil type, and regional crop information cards.
-5. **Connect** — fill out the contact form to simulate reaching a consumer, marketplace, or government body.
-
-> **Note:** The current interface is a front-end demo. Uploaded photos, comments, and contact messages are stored in browser memory only and are not sent to a server or database.
-
-## 🗂️ Project structure
-
-```text
-soil-sync/
-├── index.html   # Complete application markup, styles, and client-side behavior
-└── README.md    # Project overview and usage instructions
+```bash
+cd backend
+cp .env.example .env
+npm install
+npm run dev
 ```
 
-## 🛠️ Technology
+The API will run at `http://localhost:3000`.
 
-- **HTML5** for semantic page structure
-- **CSS3** for the responsive visual design, gradients, cards, animations, and layout
-- **Vanilla JavaScript** for gallery rendering, form handling, validation, and comments
-- **Materialize CSS/JS** for the responsive grid, navigation, forms, and UI helpers
-- **Font Awesome** for interface icons
-- **Google Fonts** for Poppins and Inter typography
+## 🔌 Frontend-to-backend setup
 
-External stylesheets and scripts are loaded from CDNs, so an internet connection is needed for the complete visual experience.
+The front-end script in `index.html` automatically checks whether the current page is served locally and points to:
 
-## 🔧 Customization guide
+- `http://localhost:3000` when running locally
+- `https://soil-sync-api.onrender.com` when deployed outside localhost
 
-Most changes can be made directly in `index.html`:
+If you are using a different backend host, update the `API_BASE` value in the script near the bottom of `index.html`.
 
-- Update the color palette in the `:root` CSS variables.
-- Change sample posts in the `cropPhotos` JavaScript array.
-- Replace placeholder image URLs with your own optimized images.
-- Edit the crop and soil information cards in the HTML.
-- Connect the upload and contact forms to an API or backend service.
-- Update social links and the footer text before publishing.
+## 🗂️ API overview
 
-For production use, consider moving the inline CSS and JavaScript into separate files and adding a real storage, authentication, moderation, and messaging layer.
+The backend exposes the following endpoints:
 
-## 🌍 Deploy with GitHub Pages
+- `GET /api/health` — health check
+- `GET /api/crops?limit=20&offset=0` — list crop posts and comments
+- `POST /api/crops` — upload a crop photo and metadata
+- `POST /api/crops/:id/comments` — add a comment to a crop
+- `POST /api/contact` — submit a contact message
+- `GET /uploads/<filename>` — serve uploaded images
 
-1. Push your changes to GitHub.
-2. Open the repository's **Settings → Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**.
-4. Select the `main` branch and the root (`/`) folder.
-5. Save the settings and wait for GitHub Pages to publish the site.
+## 🛠️ Technology stack
 
-Because the project is a static site, it can also be deployed to Netlify, Vercel, Cloudflare Pages, or any static hosting provider.
+- **HTML5** for structure and semantic markup
+- **CSS3** for responsive and accessible styling
+- **Vanilla JavaScript** for UI behavior and API calls
+- **Node.js + Express** for the backend API
+- **SQLite** for lightweight persistent data storage
+- **Multer** for image uploads
+- **Helmet, CORS, and rate limiting** for API hardening
+
+## 🎨 Design direction
+
+The interface uses a nature-inspired palette and soft card-based layout to make information feel approachable and trustworthy:
+
+| Design choice | Purpose |
+| --- | --- |
+| 🌿 Deep greens | Signal agriculture, growth, and sustainability |
+| 💧 Soft gradients | Create a fresh and open background |
+| 🧊 Glass-style panels | Separate sections without heavy visual clutter |
+| ✨ Gentle motion | Add polish while keeping the interface calm |
+| 📐 Responsive cards | Ensure usability on small and large screens |
+| 🔤 Poppins + Inter | Blend expressive headings with readable body text |
+
+## 🔧 Customization
+
+Most content can be updated directly in `index.html`:
+
+- Replace hero and section text
+- Update the color palette in the CSS variables
+- Revise the crop education cards and gallery content
+- Adjust form labels and button copy
+- Point the app to a custom backend URL in the JavaScript config
+
+For backend configuration, edit `backend/.env.example` or copy it to a local `.env` file in `backend/`.
+
+## 🌍 Deployment
+
+Because the front-end is static, it can be deployed to GitHub Pages, Netlify, Vercel, or any static host. The API can be deployed separately to a Node.js-compatible host such as Render or Railway.
 
 ## 🤝 Contributing
 
-Ideas and improvements are welcome!
+Ideas and improvements are welcome.
 
 1. Fork the repository.
-2. Create a branch: `git checkout -b feature/your-improvement`
-3. Make your changes and test them in a browser.
-4. Commit clearly: `git commit -m "Improve crop gallery experience"`
-5. Push your branch and open a pull request.
-
-When contributing, please keep the interface accessible, responsive, and easy to understand for users with different levels of technical experience.
+2. Create a feature branch.
+3. Make your changes and test them locally.
+4. Commit clearly and submit a pull request.
 
 ## 📄 License
 
-No license has been selected for this project yet. Add a license file before accepting or encouraging reuse of the code.
+No license has been selected for this project yet. Add a license file before broadly sharing or reusing the code.
 
 ---
 
